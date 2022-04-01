@@ -1,5 +1,5 @@
 ---
 name: ansible create directory example
     file:
-      path: /home/ubuntu/bruce-test-ansible
+      path: /home/ubuntu/bruce-test-ansible-common
       state: directory
