@@ -9,5 +9,5 @@
 
   roles:
     # - role: dir
-    - role: nginx
+    - nginx
 ...
