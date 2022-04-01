@@ -3,11 +3,11 @@
   hosts: all
   become: yes
 
-  tasks:
-    - name: ansible create directory example
-      file:
-        path: /home/ubuntu/bruce-test-ansible-dir-role
-        state: directory
+#  tasks:
+#    - name: ansible create directory example
+#      file:
+#        path: /home/ubuntu/bruce-test-ansible-dir-role
+#        state: directory
 
 
 
@@ -17,7 +17,7 @@
 #    - include_role:
 #        name: common
 
-#  roles:
+  roles:
+    - role: dir
 #    - role: nginx
-#    - role: dir
 ...
