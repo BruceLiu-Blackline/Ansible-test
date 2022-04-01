@@ -8,6 +8,6 @@
         name: common
 
   roles:
-    - role: dir
+    # - role: dir
     - role: nginx
 ...
