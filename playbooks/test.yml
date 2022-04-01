@@ -1,1 +1,12 @@
+---
+- name: test
+  hosts: all
+  become: yes
+  
+  pre_tasks:
+    - include_role:
+        name: common
 
+  roles:
+    - role: dir
+    - role: nginx
