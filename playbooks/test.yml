@@ -2,12 +2,22 @@
 - name: test
   hosts: all
   become: yes
-  
-  pre_tasks:
-    - include_role:
-        name: common
 
-  roles:
-    - role: nginx
-    - role: dir
+  tasks:
+    - name: ansible create directory example
+      file:
+        path: /home/ubuntu/bruce-test-ansible-dir-role
+        state: directory
+
+
+
+
+
+#  pre_tasks:
+#    - include_role:
+#        name: common
+
+#  roles:
+#    - role: nginx
+#    - role: dir
 ...
