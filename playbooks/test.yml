@@ -16,5 +16,5 @@
   roles:
     - role: dir
     - role: nginx
-#      when: ec2_tag_env == "prod"
+      when: ec2_tag_env == "prod"
 ...
