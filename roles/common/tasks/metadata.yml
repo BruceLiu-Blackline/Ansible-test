@@ -1,0 +1,41 @@
+---
+- name: gather ec2 metadata facts
+  amazon.aws.ec2_metadata_facts:
+  no_log: true
+
+- name: gather ec2 tags
+  amazon.aws.ec2_tag_info:
+    region: "{{ ansible_ec2_placement_region }}"
+    resource: "{{ ansible_ec2_instance_id }}"
+  register: ec2_tags
+
+- name: set ec2_metadata_region fact
+  set_fact:
+    ec2_metadata_region: "{{ ansible_ec2_placement_region }}"
+
+- name: set ec2_tag_env fact
+  set_fact:
+    ec2_tag_env: "{{ ec2_tags['tags']['env'] }}"
+
+- name: set ec2_tag_service fact
+  set_fact:
+    ec2_tag_service: "{{ ec2_tags['tags']['service'] }}"
+
+- name: not in us-east-1, set region based group_vars_file fact
+  set_fact:
+    group_vars_file: "../inventories/{{ ec2_tags['tags']['env'] }}-{{ ec2_metadata_region }}/group_vars/{{ ec2_tags['tags']['service'] }}.yml"
+  when: ec2_metadata_region != "us-east-1"
+
+- name: set default group_vars_file fact
+  set_fact:
+    group_vars_file: "../inventories/{{ ec2_tags['tags']['env'] }}/group_vars/{{ ec2_tags['tags']['service'] }}.yml"
+  when: ec2_metadata_region == "us-east-1"
+
+- name: include group_vars
+  include_vars:
+    file: "{{ group_vars_file }}"
+  # INVESTIGATE LATER
+  # for some reason the when clause fails even though the file exists and can be added
+  # temporarily added an ignore_errors in case the file does not exist
+  # when: "group_vars_file is file"
+  ignore_errors: yes
