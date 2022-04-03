@@ -1,8 +1,8 @@
 ---
 - name: ansible create directory example
-    file:
-      path: /home/ubuntu/bruce-test-ansible-common
-      state: directory
+  file:
+    path: /home/ubuntu/bruce-test-ansible-common
+    state: directory
 
 - name: gather ec2 tags
   amazon.aws.ec2_tag_info:
