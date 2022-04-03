@@ -4,6 +4,10 @@
     path: /home/ubuntu/bruce-test-ansible-common
     state: directory
 
+- name: gather ec2 metadata facts
+  amazon.aws.ec2_metadata_facts:
+  no_log: true
+  
 - name: gather ec2 tags
   amazon.aws.ec2_tag_info:
     region: "{{ ansible_ec2_placement_region }}"
