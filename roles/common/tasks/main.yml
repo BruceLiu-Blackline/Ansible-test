@@ -3,3 +3,13 @@
     file:
       path: /home/ubuntu/bruce-test-ansible-common
       state: directory
+
+- name: gather ec2 tags
+  amazon.aws.ec2_tag_info:
+    region: "{{ ansible_ec2_placement_region }}"
+    resource: "{{ ansible_ec2_instance_id }}"
+  register: ec2_tags
+  
+- name: set ec2_tag_env fact
+  set_fact:
+    ec2_tag_env: "{{ ec2_tags['tags']['env'] }}"
