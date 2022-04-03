@@ -1,19 +1,41 @@
 ---
-- name: ansible create directory example
-  file:
-    path: /home/ubuntu/bruce-test-ansible-common
-    state: directory
+- name: install
+  import_tasks: install.yml
+  tags:
+    - common
 
-- name: gather ec2 metadata facts
-  amazon.aws.ec2_metadata_facts:
-  no_log: true
+- name: check if aws
+  uri:
+    url: http://169.254.169.254/latest/meta-data
+    timeout: 2
+  register: is_aws
+  failed_when: False
+  check_mode: no
+
+- name: get ec2 metadata
+  import_tasks: metadata.yml
+  tags:
+    - common
+  when: is_aws.status == 200
+
+
+
+
+#- name: ansible create directory example
+#  file:
+#    path: /home/ubuntu/bruce-test-ansible-common
+#    state: directory
+
+#- name: gather ec2 metadata facts
+#  amazon.aws.ec2_metadata_facts:
+#  no_log: true
   
-- name: gather ec2 tags
-  amazon.aws.ec2_tag_info:
-    region: "{{ ansible_ec2_placement_region }}"
-    resource: "{{ ansible_ec2_instance_id }}"
-  register: ec2_tags
+#- name: gather ec2 tags
+#  amazon.aws.ec2_tag_info:
+#    region: "{{ ansible_ec2_placement_region }}"
+#    resource: "{{ ansible_ec2_instance_id }}"
+#  register: ec2_tags
   
-- name: set ec2_tag_env fact
-  set_fact:
-    ec2_tag_env: "{{ ec2_tags['tags']['env'] }}"
+#- name: set ec2_tag_env fact
+#  set_fact:
+#    ec2_tag_env: "{{ ec2_tags['tags']['env'] }}"
