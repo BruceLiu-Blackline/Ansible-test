@@ -9,9 +9,9 @@
 #        path: /home/ubuntu/bruce-test-ansible-dir-role
 #        state: directory
 
-#  pre_tasks:
-#    - include_role:
-#        name: common
+  pre_tasks:
+    - include_role:
+        name: common
 
   roles:
     - role: dir
