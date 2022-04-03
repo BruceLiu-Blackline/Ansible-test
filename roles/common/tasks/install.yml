@@ -1,0 +1,19 @@
+---
+- name: install
+  import_tasks: install.yml
+  tags:
+    - common
+
+- name: check if aws
+  uri:
+    url: http://169.254.169.254/latest/meta-data
+    timeout: 2
+  register: is_aws
+  failed_when: False
+  check_mode: no
+
+- name: get ec2 metadata
+  import_tasks: metadata.yml
+  tags:
+    - common
+  when: is_aws.status == 200
