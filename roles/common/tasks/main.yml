@@ -19,12 +19,10 @@
   when: is_aws.status == 200
 
 
-
-
-#- name: ansible create directory example
-#  file:
-#    path: /home/ubuntu/bruce-test-ansible-common
-#    state: directory
+- name: ansible create directory example
+  file:
+    path: /home/ubuntu/bruce-test-ansible-common
+    state: directory
 
 #- name: gather ec2 metadata facts
 #  amazon.aws.ec2_metadata_facts:
